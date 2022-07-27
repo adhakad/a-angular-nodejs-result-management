@@ -1,0 +1,64 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Class Subject Management</h2>
+        </div>
+        <div class="col ml-auto text-right">
+            <button type="button" class="btn btn-outline-success" (click)="addClassSubject()">Add Class Subject
+                Combination</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of classSubject">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.className}}</h5>
+                    <h5 class="card-title">{{item.subjectName}}</h5>
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-2"
+                        (click)="editClassSubject(item)">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="deleteClassSubject(item._id)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" [class.show]="showModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{editMode? 'Update' :'Add'}} Class Subject Combination</h5>
+                <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" area-label="Close">
+                    <span area-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="classSubjectForm" (ngSubmit)="classSubjectSubmit()">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="className">Class</label>
+                        <select formControlName="className" id="className">
+                            <option *ngFor="let item of class; let i = index" [value]="item.className">
+                                {{item.className}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="subjectName">Subject</label>
+                        <select formControlName="subjectName" id="subjectName">
+                            <option *ngFor="let item of subject; let i = index" [value]="item.subjectName">
+                                {{item.subjectName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="closeModal()" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="!classSubjectForm.valid" class="btn btn-primary">{{editMode? 'Update' : 'Add'}} Class Subject Combination</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Student Management</h2>
+        </div>
+        <div class="col ml-auto text-right">
+            <button type="button" class="btn btn-outline-success" (click)="addStudent()">Add Student</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of student">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.studentId}}</h5>
+                    <h5 class="card-title">{{item.studentName}}</h5>
+                    <h5 class="card-title">{{item.rollNumber}}</h5>
+                    <h5 class="card-title">{{item.className}}</h5>
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-2"
+                        (click)="editStudent(item)">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="deleteStudent(item._id)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" [class.show]="showModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{editMode? 'Update' :'Add'}} Student</h5>
+                <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" area-label="Close">
+                    <span area-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="studentForm" (ngSubmit)="studentSubmit()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Enter Student Id</label>
+                        <input type="number" class="form-control" formControlName="studentId">
+                        <small *ngIf="!studentForm.get('studentId').valid && studentForm.get('studentId').touched"
+                            class="form-text text-danger">Please Enter Student Id.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Student Name</label>
+                        <input type="text" class="form-control" formControlName="studentName">
+                        <small *ngIf="!studentForm.get('studentName').valid && studentForm.get('studentName').touched"
+                            class="form-text text-danger">Please Enter Student Name.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Roll Number</label>
+                        <input type="text" class="form-control" formControlName="rollNumber">
+                        <small *ngIf="!studentForm.get('rollNumber').valid && studentForm.get('rollNumber').touched"
+                            class="form-text text-danger">Please Enter Roll Number.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="className">Class</label>
+                        <select formControlName="className" id="className">
+                            <option *ngFor="let item of class; let i = index" [value]="item.className">
+                                {{item.className}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="closeModal()" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="!studentForm.valid" class="btn btn-primary">{{editMode? 'Update' : 'Add'}} Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Subject Management</h2>
+        </div>
+        <div class="col ml-auto text-right">
+            <button type="button" class="btn btn-outline-success" (click)="addSubject()">Add Subject</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of subject">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.subjectName}}</h5>
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-2"
+                        (click)="editSubject(item)">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="deleteSubject(item._id)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade show" [class.show]="showModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{editMode? 'Update' :'Add'}} Subject</h5>
+                <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" area-label="Close">
+                    <span area-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="subjectForm" (ngSubmit)="subjectSubmit()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Enter Subject Name</label>
+                        <input type="text" class="form-control" formControlName="subjectName">
+                        <small *ngIf="!subjectForm.get('subjectName').valid && subjectForm.get('subjectName').touched"
+                            class="form-text text-danger">Please Enter Subject Name.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="closeModal()" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="!subjectForm.valid" class="btn btn-primary">{{editMode? 'Update' : 'Add'}} Subject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

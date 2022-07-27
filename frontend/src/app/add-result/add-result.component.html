@@ -1,0 +1,42 @@
+<div class="container py-3" *ngIf="!showModal">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Result Management</h2>
+        </div>
+        <div class="col ml-auto text-right">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of class">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.className}}</h5>
+                    <button type="button" class="btn btn-outline-success" (click)="getClassSubject(item.className)">Add
+                        Result {{item.className}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showModal">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Result</h5>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
+        <hr>
+        <input type="number" formControlName="rollNumber" placeholder="Enter Roll Number">
+        <div formGroupName="type">
+            <div formArrayName="options">
+                <div *ngFor="let child of abc; let i = index">
+                    <div [formGroupName]="i">
+                        <label>{{child.subjectName}}</label>
+                        <input type="number" formControlName="subjectName" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+</div>
